@@ -1,0 +1,15 @@
+{
+  "themeColor": "#ff0000",
+  "webhookURL": "https://discord.com/api/webhooks/...",
+  "logFolderPath": "C:\\Users\\Administrator\\OmegaManager\\servers\\0\\profiles\\ExpansionMod\\Logs",
+  "compactOutput": false,
+  "hidePositions": true,
+  "excludeEnabled": false,
+  "excludeEvents": [
+    "SAFE_ZONE_ENTER",
+    "SAFE_ZONE_EXIT",
+    "PLAYER_PURCHASE",
+    "PLAYER_SALE",
+    "HAS_RETRIEVED"
+  ]
+}
