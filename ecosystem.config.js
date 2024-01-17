@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'expansion-market-discord-logs',
-      script: './dist/client/index.js',
+      script: './dist/src/index.js',
       env_production: {
         NODE_ENV: 'production',
       },
