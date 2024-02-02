@@ -1,6 +1,6 @@
 # expansion-market-discord-logs
 
-A small application that forwards [DayZ Expansion Market](https://steamcommunity.com/sharedfiles/filedetails/?id=2572328470) to your Discord server through webhooks, allowing your administrators to use Discord's powerful search function to find exactly what they need without directly accessing the server.
+A small application that forwards [DayZ Expansion Market](https://steamcommunity.com/sharedfiles/filedetails/?id=2572328470) logging to your Discord server through webhooks, allowing your administrators to use Discord's powerful search function to find exactly what they need without directly accessing the server.
 
 ## Prerequisites
 
