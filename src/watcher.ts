@@ -22,9 +22,7 @@ export const initFileWatcher = async (
   let filePath = targetPath;
   if (isDirectory) {
     const newestFilePath = await findNewestFile(filePath, skipLatestN, extension);
-    if (!newestFilePath) {
-      throw new Error(`${tag} Failed to find newest file in directory (path "${targetPath}")`);
-    }
+    if (!newestFilePath) return null;
     filePath = newestFilePath;
   }
 
@@ -34,7 +32,8 @@ export const initFileWatcher = async (
   try {
     tail = new Tail(filePath);
   } catch (err) {
-    throw new Error(`${tag} Failed to create Tail instance (file missing or invalid, path "${filePath}"): ${err}`);
+    console.error(`${tag} Failed to create Tail instance (file missing or invalid, path "${filePath}"): ${err}`);
+    return null;
   }
   tail.on('line', callback);
   tail.on('error', (err) => {

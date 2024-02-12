@@ -6,12 +6,14 @@ const tag = '[log-tail/market]';
 export const processedEMLogLines = new Set<string>();
 
 export const initEMLogFileWatcher = async () => {
-  let { tail, filePath } = await initFileWatcher(
+  const result = await initFileWatcher(
     appConfig.logFolderPath,
     handleEMLogLine,
     undefined,
     'log'
   );
+  if (result === null) return;
+  let { tail, filePath } = result;
 
   const webhook = new WebhookClient({ url: appConfig.webhookURL });
   setInterval(() => {
@@ -30,12 +32,14 @@ export const initEMLogFileWatcher = async () => {
     console.debug(`${tag} New file detected, switching to "${newestFilePath}"`);
     tail.unwatch();
     processedEMLogLines.clear();
-    ({ tail, filePath } = await initFileWatcher(
+    const result = await initFileWatcher(
       appConfig.logFolderPath,
       handleEMLogLine,
       undefined,
       'log'
-    ));
+    );
+    if (result === null) return; // Logged inside function
+    ({ tail, filePath } = result);
   }, EM_LOG_DELAY * 10);
 };
 

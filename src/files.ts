@@ -4,11 +4,16 @@ import path from 'path';
 export const findNewestFile = async (
   directoryPath: string,
   skipN = 0,
-  extension?: string | null
+  extension?: string | null,
+  fileNamePattern?: string
 ): Promise<string | null> => {
   try {
-    const files = await readdir(directoryPath);
-    if (files.length === 0) return null;
+    const files = await readdir(directoryPath).catch((err) => {
+      console.error(`Error encountered while resolving latest file from "${directoryPath}"`);
+      console.error(err);
+      return null;
+    });
+    if (files === null || files.length === 0) return null;
 
     // Sort files by creation time (ctimeMs) in descending order
     let sortedFiles = await Promise.all(
@@ -25,7 +30,10 @@ export const findNewestFile = async (
     // Resolve workable files
     sortedFiles = sortedFiles
       // Filter whitelisted files
-      .filter((e) => extension === null || typeof extension === 'undefined' || e.filePath.endsWith(extension))
+      .filter((e) =>
+        (extension === null || typeof extension === 'undefined' || e.filePath.endsWith(extension))
+        && (fileNamePattern === null || typeof fileNamePattern === 'undefined' || e.filePath.includes(fileNamePattern))
+      )
       // Sort by creation date
       .sort((a, b) => b.ctimeMs - a.ctimeMs);
 
